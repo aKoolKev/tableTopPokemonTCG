@@ -1,0 +1,15 @@
+img {
+    width: 150px;
+    height: 200px;
+    padding: none;
+    margin: none;
+    cursor: pointer;
+    position: fixed;
+}
+
+img:hover{
+    border: 3px solid red; /* Red border when mouse hover image */
+    border-radius: 10px;
+    z-index: 1000;
+}
+

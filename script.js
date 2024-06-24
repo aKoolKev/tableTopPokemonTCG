@@ -1,3 +1,4 @@
+//stores card image source
 const gardeviorDeckImg = [
     "GardeviorDeck_cardImages/artazon.png",
     "GardeviorDeck_cardImages/arven.png",
@@ -61,15 +62,26 @@ const gardeviorDeckImg = [
     "GardeviorDeck_cardImages/ultraBall.png"
 ];
 
+//store card img object
 let gardeviorDeck = [];
 
+// //card object
+// function Card (imgSrc) {
+//     this._imgSrc = imgSrc,
+//     this.imgEl = docment.createElement()
+//     this._pokemonCardBackside = "pokemonCardBackside.png",
+//     this.showBackSide = true;
+// }
 
+
+//for dragging img
 let startX = 0;
 let startY = 0;
 let newX = 0;
 let newY = 0;
 let zIndexCounter = 1;
 
+//making images draggable
 function mouseDown(e) {
     e.preventDefault(); // Prevent default behavior like text selection
 
@@ -99,7 +111,7 @@ function mouseDown(e) {
     document.addEventListener('mouseup', mouseUp);  
 }
 
-
+//unzoom on a card
 function undoDoubleClick(e) {
     const img = e.target;
     img.style.transform = 'scale(1)'; // Example: Scale up the image
@@ -112,6 +124,7 @@ function undoDoubleClick(e) {
     img.addEventListener('dblclick', doubleClick); // Reattach the original doubleClick event
 }
 
+//zoom in on a card
 function doubleClick(e){
 
     const img = e.target;
@@ -125,6 +138,7 @@ function doubleClick(e){
     img.addEventListener('dblclick', undoDoubleClick);
 }
 
+//set the card image
 function loadDeck(){
     const cardCountDisplayEl = document.getElementById("card-count-display");
 
@@ -137,13 +151,14 @@ function loadDeck(){
         img.addEventListener('mousedown', mouseDown);
         img.addEventListener('dblclick', doubleClick);
 
+       
         gardeviorDeck.push(img);
     });
 
     cardCountDisplayEl.innerHTML = gardeviorDeck.length;
 }
 
-
+//shuffle the deck
 function shuffleDeck(){
     const deckLength = gardeviorDeck.length;
 
@@ -155,6 +170,7 @@ function shuffleDeck(){
     }
 }
 
+//display the deck
 function printDeck(){
     const board = document.getElementById("card-container");
     board.innerHTML = '';

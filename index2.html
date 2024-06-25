@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<style>
+.image-container {
+    position: relative;
+    display: inline-block;
+}
+
+.draggable-image {
+    cursor: move; /* Indicates the image is draggable */
+}
+
+.overlay-button {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    padding: 2px 5px;
+    margin: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    color: white;
+    border: none;
+    cursor: pointer;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.image-container:hover .overlay-button {
+    opacity: 1;
+}
+
+img {
+    width: 50px;
+    height: auto;
+    padding: 0;
+    margin: 0;
+    /* border: none; */
+    cursor: pointer;
+    position: fixed;
+}
+
+img:hover{
+    border: 3px solid red; /* Red border when mouse hover image */
+    border-radius: 10px;
+    z-index: 1000;
+}
+
+</style>
+
+<script>
+    //for dragging img
+let startX = 0;
+let startY = 0;
+let newX = 0;
+let newY = 0;
+let zIndexCounter = 1;
+
+//making images draggable
+function mouseDown(e) {
+    e.preventDefault(); // Prevent default behavior like text selection
+
+    startX = e.clientX;
+    startY = e.clientY;
+
+    const img = e.target; // Reference the specific image being dragged
+    img.style.zIndex = zIndexCounter++;
+
+    function mouseMove(e) {
+        newX = startX - e.clientX;
+        newY = startY - e.clientY;
+
+        startX = e.clientX;
+        startY = e.clientY;
+
+        img.style.top = (img.offsetTop - newY) + 'px';
+        img.style.left = (img.offsetLeft - newX) + 'px';
+    }
+
+    function mouseUp() {
+        document.removeEventListener('mousemove', mouseMove);
+        document.removeEventListener('mouseup', mouseUp);
+    }
+
+    document.addEventListener('mousemove', mouseMove);
+    document.addEventListener('mouseup', mouseUp);  
+}
+
+//unzoom on a card
+function undoDoubleClick(e) {
+    const img = e.target;
+    img.style.transform = 'scale(1)'; // Example: Scale up the image
+    img.style.transition = 'transform 0.3s ease';
+
+    // Remove this event listener after it is triggered
+    img.removeEventListener('dblclick', undoDoubleClick);
+    img.addEventListener('dblclick', doubleClick); // Reattach the original doubleClick event
+}
+
+//zoom in on a card
+function doubleClick(e){
+
+    const img = e.target;
+    
+    img.style.transform = 'scale(2.5)'; // Example: Scale up the image
+    img.style.transition = 'transform 0.3s ease';
+
+    // Remove the original doubleClick event and attach undoDoubleClick
+    img.removeEventListener('dblclick', doubleClick);
+    img.addEventListener('dblclick', undoDoubleClick);
+}
+
+window.onload = function() {
+    let imgEl = document.getElementById("card");
+    imgEl.addEventListener('mousedown',mouseDown());
+}
+</script>
+<title>Image Button Hover Example</title>
+</head>
+<body>
+    <br><br>
+    <br><br>
+    <br><br>
+    <div class="image-container">
+        <img src="your-image.jpg" alt="Your Image" class="draggable-image" id = "card">
+        <button class="overlay-button">Button</button>
+    </div>
+
+</body>
+</html>

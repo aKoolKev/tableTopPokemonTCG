@@ -1,16 +1,16 @@
-img {
+.card-container, img {
     width: 150px;
     height: 200px;
     padding: 0;
     margin: 0;
     border: none;
-    cursor: pointer;
-    position: fixed;
+
+    cursor: move;
+    position: absolute;
 }
 
-img:hover{
+.card-container, img:hover{
     border: 3px solid red; /* Red border when mouse hover image */
     border-radius: 10px;
     z-index: 1000;
 }
-

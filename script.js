@@ -65,13 +65,21 @@ const gardeviorDeckImg = [
 //store card img object
 let gardeviorDeck = [];
 
-// //card object
-// function Card (imgSrc) {
-//     this._imgSrc = imgSrc,
-//     this.imgEl = docment.createElement()
-//     this._pokemonCardBackside = "pokemonCardBackside.png",
-//     this.showBackSide = true;
-// }
+//card object
+function Card (imgSrc) {
+
+    //front side display
+    this._imgFrontside = document.createElement('img'),
+    this._imgFrontside.src = imgSrc,
+    this._imgFrontside.addEventListener('mousedown', mouseDown);
+    this._imgFrontside.addEventListener('dblclick', doubleClick);
+
+    //backside display
+    this._imgBackside = document.createElement('img');
+    this._imgBackside.src = "pokemonCardBackside.png";
+    this._imgBackside.addEventListener('mousedown', mouseDown);
+    this._imgBackside.addEventListener('dblclick', doubleClick);
+}
 
 
 //for dragging img
@@ -116,8 +124,6 @@ function undoDoubleClick(e) {
     const img = e.target;
     img.style.transform = 'scale(1)'; // Example: Scale up the image
     img.style.transition = 'transform 0.3s ease';
-    // img.style.height = '200px';
-    // img.style.width = '150px';
 
     // Remove this event listener after it is triggered
     img.removeEventListener('dblclick', undoDoubleClick);
@@ -128,8 +134,7 @@ function undoDoubleClick(e) {
 function doubleClick(e){
 
     const img = e.target;
-    // img.style.height = '500px';
-    // img.style.width = 'auto';
+    
     img.style.transform = 'scale(2.5)'; // Example: Scale up the image
     img.style.transition = 'transform 0.3s ease';
 
@@ -140,22 +145,12 @@ function doubleClick(e){
 
 //set the card image
 function loadDeck(){
-    const cardCountDisplayEl = document.getElementById("card-count-display");
-
     gardeviorDeckImg.forEach(imgSrc =>{
         //create image
-        const img = document.createElement('img');
-        img.src = imgSrc; 
-        
-        //make image drag-able
-        img.addEventListener('mousedown', mouseDown);
-        img.addEventListener('dblclick', doubleClick);
-
-       
-        gardeviorDeck.push(img);
+        let newCard = new Card(imgSrc);
+    
+        gardeviorDeck.push(newCard);
     });
-
-    cardCountDisplayEl.innerHTML = gardeviorDeck.length;
 }
 
 //shuffle the deck
@@ -176,7 +171,18 @@ function printDeck(){
     board.innerHTML = '';
 
     gardeviorDeck.forEach(card => {
-        board.appendChild(card);
+        // let flipButtonEl = document.createElement('button');
+        // flipButtonEl.innerHTML = 'Flip';
+        // flipButtonEl.addEventListener('click', ()=>{
+        //     alert("flip card");
+        // });
+
+        // let cardEl = document.createElement('div');
+        // cardEl.append(card._imgBackside, flipButtonEl);
+
+        // board.appendChild(cardEl);
+
+        board.appendChild(card._imgBackside);
     });
 }
 

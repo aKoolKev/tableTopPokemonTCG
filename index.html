@@ -3,24 +3,17 @@
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
         <title>Pokemon TCG Table Top</title>
         <link rel="stylesheet" href="style.css">
         <script src="script.js"></script>
     </head>
     <body>
-        <button onclick=shuffleDeck()>Shuffle</button>
-        <br>
-        <button onclick=printDeck()>Print</button>
-        
-        <div>
-            
-            <p>
-                Card Count:
-                <span id="card-count-display">0</span>
-            </p>
-
+        <div id="card-container">
+            <div id="card">
+                <!-- <img> will be appended with JS -->
+            </div>
         </div>
-
-        <div id="card-container"></div>
+        
     </body>
 </html>
